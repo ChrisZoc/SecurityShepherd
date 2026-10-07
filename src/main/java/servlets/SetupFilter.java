@@ -37,6 +37,10 @@ public class SetupFilter implements Filter {
         res.sendRedirect("setup.jsp");
       }
     } else {
+      if (pageName.contains("setup")) {
+        res.sendRedirect("login.jsp");
+        return;
+      }
       chain.doFilter(request, response);
     }
   }

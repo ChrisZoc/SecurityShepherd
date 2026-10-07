@@ -1,6 +1,8 @@
 package utils;
 
 import java.math.BigInteger;
+import java.net.URI;
+import java.net.URISyntaxException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.Cookie;
@@ -194,12 +196,21 @@ public class Validate {
    * @return
    */
   public static String makeValidUrl(String theUrl) {
-    theUrl = theUrl.toLowerCase();
-    if (!theUrl.startsWith("http")) {
-      theUrl = "http" + theUrl;
-      log.debug("Transformed to: " + theUrl);
+    if (theUrl == null) {
+      return "https://localhost/";
     }
-    return theUrl;
+    try {
+      URI uri = new URI(theUrl);
+      if (uri.getScheme() == null
+          || !(uri.getScheme().equalsIgnoreCase("http")
+              || uri.getScheme().equalsIgnoreCase("https"))) {
+        return "https://localhost/";
+      }
+      return uri.normalize().toString();
+    } catch (URISyntaxException e) {
+      log.debug("Invalid URL received", e);
+      return "https://localhost/";
+    }
   }
 
   /**
