@@ -54,6 +54,47 @@
 		<listener-class>listeners.DatabaseLifecycleListener</listener-class>
 	</listener>
 
+	<filter>
+		<filter-name>csrfOriginFilter</filter-name>
+		<filter-class>servlets.CsrfOriginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>csrfOriginFilter</filter-name>
+		<url-pattern>/root/grantComplete/csrfLesson</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>csrfOriginFilter</filter-name>
+		<url-pattern>/user/csrfchallengeone/plusplus</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>csrfOriginFilter</filter-name>
+		<url-pattern>/user/csrfchallengetwo/plusplus</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>csrfOriginFilter</filter-name>
+		<url-pattern>/user/csrfchallengejson/plusplus</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>csrfOriginFilter</filter-name>
+		<url-pattern>/user/csrfchallengethree/plusplus</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>csrfOriginFilter</filter-name>
+		<url-pattern>/user/csrfchallengefour/plusplus</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>csrfOriginFilter</filter-name>
+		<url-pattern>/user/csrfchallengefive/plusplus</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>csrfOriginFilter</filter-name>
+		<url-pattern>/user/csrfchallengesix/plusplus</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>csrfOriginFilter</filter-name>
+		<url-pattern>/user/csrfchallengeseven/plusplus</url-pattern>
+	</filter-mapping>
+
 	<servlet>
 		<servlet-name>/setup</servlet-name>
 		<servlet-class>servlets.Setup</servlet-class>
