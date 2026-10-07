@@ -97,6 +97,8 @@ public class Login extends HttpServlet {
         ses.setAttribute("userClass", user[4]);
         log.debug("Setting CSRF cookie");
         Cookie token = new Cookie("token", Hash.randomString());
+        token.setHttpOnly(true);
+        token.setPath("/");
         if (request.getRequestURL().toString().startsWith("https")) // If Requested over HTTPs
         {
           token.setSecure(true);

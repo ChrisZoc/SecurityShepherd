@@ -18,6 +18,14 @@
 		</jsp-property-group>
 	</jsp-config>
 
+	<session-config>
+		<tracking-mode>COOKIE</tracking-mode>
+		<cookie-config>
+			<http-only>true</http-only>
+			<secure>true</secure>
+		</cookie-config>
+	</session-config>
+
 	<error-page>
 		<error-code>403</error-code>
 		<location>/serverError.jsp</location>

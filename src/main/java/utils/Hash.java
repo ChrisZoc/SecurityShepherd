@@ -115,25 +115,20 @@ public class Hash {
    * @return Random String
    */
   public static String randomString() {
-    String result = new String();
-
-    byte byteArray[] = new byte[16];
-
-    SecureRandom psn1 = null;
-
     try {
-      psn1 = SecureRandom.getInstance("SHA1PRNG");
+      SecureRandom secureRandom = SecureRandom.getInstanceStrong();
+      byte[] byteArray = new byte[32];
+      secureRandom.nextBytes(byteArray);
+      StringBuilder sb = new StringBuilder(byteArray.length * 2);
+      for (byte b : byteArray) {
+        sb.append(String.format("%02x", b));
+      }
+      String result = sb.toString();
+      log.debug("Generated String = " + result);
+      return result;
     } catch (NoSuchAlgorithmException e) {
-      log.error("Could not find SHA1PRNG: " + e.toString());
+      log.error("Could not find a strong SecureRandom implementation: " + e.toString());
       throw new RuntimeException(e);
     }
-
-    psn1.setSeed(psn1.nextLong());
-    psn1.nextBytes(byteArray);
-    BigInteger bigInt = new BigInteger(byteArray);
-    result = bigInt.toString();
-    log.debug("Generated String = " + result);
-
-    return result;
   }
 }
