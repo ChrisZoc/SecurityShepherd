@@ -57,6 +57,9 @@ public class Validate {
    * @return csrfCookie
    */
   public static Cookie getToken(Cookie[] userCookies) {
+    if (userCookies == null) {
+      return null;
+    }
     int i = 0;
     Cookie theToken = null;
     for (i = 0; i < userCookies.length; i++) {
@@ -68,20 +71,8 @@ public class Validate {
     if (theToken != null) {
       // log.debug("Found Cookie " + theToken.getName() + " with value " +
       // theToken.getValue());
-      // The Token is currently designed to be a random Big Integer. If the Big
-      // Integer Case does not work, the token has been modified. Potentially in a
-      // malicious manner
-      try {
-        BigInteger theTokenCasted = new BigInteger(theToken.getValue());
-        BigInteger tenGrand = new BigInteger("10000");
-        BigInteger tenGrandNeg = new BigInteger("-10000");
-        if (!(theTokenCasted.compareTo(tenGrand) > 0
-            || theTokenCasted.compareTo(tenGrandNeg) < 0)) {
-          log.error("CSRF Cookie Token was modified in some manor!");
-          theToken = null;
-        }
-      } catch (Exception e) {
-        log.error("CSRF Cookie Token was modified in some manor: " + e.toString());
+      if (!theToken.getValue().matches("^[a-fA-F0-9]{64}$")) {
+        log.error("CSRF Cookie Token was modified in some manor!");
         theToken = null;
       }
     }

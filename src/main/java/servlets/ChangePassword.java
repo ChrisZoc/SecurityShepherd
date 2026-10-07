@@ -3,7 +3,6 @@ package servlets;
 import dbProcs.Getter;
 import dbProcs.Setter;
 import java.io.IOException;
-import java.math.BigInteger;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -100,8 +99,7 @@ public class ChangePassword extends HttpServlet {
                 // User Account is Locked
                 log.debug("The user account is locked. Logging the user out");
                 Cookie cookieToken = Validate.getToken(request.getCookies());
-                BigInteger temp = new BigInteger(cookieToken.getValue());
-                response.sendRedirect("logout?csrfToken=" + temp);
+                response.sendRedirect("logout?csrfToken=" + cookieToken.getValue());
               } catch (Exception e) {
                 log.error(
                     "Cant Log the user out because they dont have a valid CSRF token : "
