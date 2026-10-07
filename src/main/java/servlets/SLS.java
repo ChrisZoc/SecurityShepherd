@@ -103,6 +103,9 @@ public class SLS extends HttpServlet {
           emptyCookie.setPath("/");
           emptyCookie.setHttpOnly(true);
           emptyCookie.setMaxAge(0);
+          if (request.getRequestURL().toString().startsWith("https")) {
+            emptyCookie.setSecure(true);
+          }
           response.addCookie(emptyCookie);
           log.debug("User Logged Out");
           response.sendRedirect("../login.jsp");
