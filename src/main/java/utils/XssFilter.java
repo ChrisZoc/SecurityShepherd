@@ -1,9 +1,7 @@
 package utils;
 
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.owasp.encoder.Encode;
@@ -51,7 +49,7 @@ public class XssFilter {
           return howToMakeAUrlUrl;
         }
         input = Encode.forHtmlAttribute(parsed.toString());
-      } catch (MalformedURLException | URISyntaxException e) {
+      } catch (URISyntaxException e) {
         log.debug("Could not Cast URL from input: " + e.toString());
         input = howToMakeAUrlUrl;
       }
@@ -83,7 +81,7 @@ public class XssFilter {
           return howToMakeAUrlUrl;
         }
         input = Encode.forHtmlAttribute(parsed.toString());
-      } catch (MalformedURLException | URISyntaxException e) {
+      } catch (URISyntaxException e) {
         log.debug("Could not Cast URL from input: " + e.toString());
         input = howToMakeAUrlUrl;
       }
