@@ -202,7 +202,7 @@ public class Setup extends HttpServlet {
 
         // The supplied auth data was incorrect
         htmlOutput += bundle.getString("generic.text.setup.authentication.failed");
-        log.error("Authorization mismatch during setup");
+        log.error("Authorization mismatch: " + auth + " does not equal " + dbAuth);
 
       } else {
         // Test the user's entered database properties. Use DriverManager directly instead of
@@ -229,7 +229,7 @@ public class Setup extends HttpServlet {
           log.debug("Database connection successful");
 
         } catch (SQLException e) {
-          htmlOutput += bundle.getString("generic.text.setup.connection.failed");
+          htmlOutput += bundle.getString("generic.text.setup.connection.failed") + e.getMessage();
 
           log.error("DB connection error: " + e.toString());
           connectionSuccess = false;
@@ -261,7 +261,7 @@ public class Setup extends HttpServlet {
 
               success = false;
 
-              htmlOutput = bundle.getString("generic.text.setup.failed");
+              htmlOutput = bundle.getString("generic.text.setup.failed") + ": " + e.getMessage();
 
               log.error("Could not save mysql properties file: " + e.toString());
             }
@@ -291,8 +291,8 @@ public class Setup extends HttpServlet {
               }
               success = true;
             } catch (SQLException e) {
-              htmlOutput = bundle.getString("generic.text.setup.failed");
-              log.error(bundle.getString("generic.text.setup.failed"), e);
+              htmlOutput = bundle.getString("generic.text.setup.failed") + ": " + e.getMessage();
+              log.error(bundle.getString("generic.text.setup.failed") + ": " + e.getMessage());
               if (!hasDBFile) {
                 FileUtils.deleteQuietly(new File(Constants.MYSQL_DB_PROP));
               }
@@ -321,7 +321,8 @@ public class Setup extends HttpServlet {
                 try {
                   executeMongoScript();
                 } catch (IOException e) {
-                  htmlOutput = bundle.getString("generic.text.setup.failed");
+                  htmlOutput =
+                      bundle.getString("generic.text.setup.failed") + ": " + e.getMessage();
                   if (!hasDBFile) {
                     FileUtils.deleteQuietly(new File(Constants.MYSQL_DB_PROP));
                   }

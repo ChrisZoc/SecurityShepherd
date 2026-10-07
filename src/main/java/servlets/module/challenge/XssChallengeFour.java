@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.owasp.encoder.Encode;
 import utils.FindXSS;
 import utils.Hash;
 import utils.ShepherdLogManager;
@@ -90,8 +91,15 @@ public class XssChallengeFour extends HttpServlet {
           } else {
 
             searchTerm = XssFilter.encodeForHtml(searchTerm);
+            String safeUrl = Encode.forHtmlAttribute(searchTerm);
             userPost =
-                "<a href=\"" + searchTerm + "\" alt=\"" + searchTerm + "\">" + searchTerm + "</a>";
+                "<a href=\""
+                    + safeUrl
+                    + "\" alt=\""
+                    + safeUrl
+                    + "\">"
+                    + Encode.forHtml(searchTerm)
+                    + "</a>";
             log.debug("After Encoding - " + searchTerm);
             if (FindXSS.search(userPost)) {
               htmlOutput =

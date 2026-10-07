@@ -81,6 +81,12 @@ public class DirectObjectBankTransfer extends HttpServlet {
         log.debug("Transfer Amount - " + transferAmountString);
         float tranferAmount = Float.parseFloat(transferAmountString);
 
+        String authenticatedAccount = (String) ses.getAttribute("directObjectBankAccount");
+        if (authenticatedAccount == null || !authenticatedAccount.equals(senderAccountNumber)) {
+          out.write(bundle.getString("transfer.error.occurred"));
+          return;
+        }
+
         // Data Validation
         // Positive Transfer Amount?
         if (tranferAmount > 0) {
